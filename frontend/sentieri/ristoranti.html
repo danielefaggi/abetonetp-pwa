@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Quick Start Guide Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="leaflet.css" />
+	<link rel="stylesheet" href="leaflet-gps.css" />
+	
+</head>
+<body>
+	<div id="map" style="position:fixed; width: 100%; height: 100%; left: 0; top:0;"></div>
+
+	<script src="leaflet.js"></script>
+	<script src="leaflet-gps.js"></script>
+	<script>
+
+				
+		var customControl = L.Control.extend({
+			options: {
+				position: 'bottomright' 
+				//control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
+				},
+
+			onAdd: function (map) {
+			 var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+			 container.style.backgroundColor = 'white';
+			 container.style.backgroundImage = "url(images/back2.png)";
+			 container.style.width = '32px';
+			 container.style.height = '32px';
+			 container.onclick = function(){
+				 console.log('buttonClicked');
+				 window.history.back();
+				 }
+				 return container;			
+				 },
+				 });
+				 
+				 
+		var sleep = L.icon({
+			iconUrl: 'icone/sleep.png',
+			iconSize:     [40, 40], 
+			iconAnchor:   [40, 40], 
+			popupAnchor:  [-20, -40] 
+			});		 
+
+		var food = L.icon({
+			iconUrl: 'icone/food.png',
+			iconSize:     [40, 40], 
+			iconAnchor:   [40, 40], 
+			popupAnchor:  [-20, -40] 
+			});		 
+				 
+				 
+		var map = L.map('map').setView([44.13, 10.6572], 12);
+		L.control.scale().addTo(map);
+		map.addControl(new customControl());
+		map.addControl( new L.Control.Gps({autoActive:false}) );
+
+		L.tileLayer('Maps/{z}/{x}/{y}.png', {
+			maxZoom: 15,
+			minZoom: 11,
+			id: 'examples.map-i875mjb7'
+		}).addTo(map);
+		
+		var m2 = L.marker([44.1138883,10.6900835], {icon: sleep}).addTo(map);
+		m2.bindPopup("Albergo Ristorante La Casetta<br>Via dei Lamponi, 1 - Pian di Novello - Cutigliano<br>+39 0573 673090");
+		
+		var m2 = L.marker([44.0898044,10.7426119], {icon: sleep}).addTo(map);
+		m2.bindPopup("Agriturismo Fattoria La Piastra<br>Via Provinciale Torri di Popiglio - Loc. Casetta - Cutigliano<br>+39 0573 68443");
+		
+		var m3 = L.marker([44.0319504,10.8745337], {icon: sleep}).addTo(map);
+		m3.bindPopup("Villa Le Panche<br>Via Modenese, 756 - Pontepetri<br>+39 349 6782147");
+		
+		
+		var m4 = L.marker([44.0325675,10.8750916], {icon: food}).addTo(map);
+		m4.bindPopup("Antica Locanda Le Panche<br>Via Modenese, 758 - Pontepetri - Pistoia<br>+39 349 6782147");
+
+
+		var m5 = L.marker([44.0325675,10.8750916], {icon: sleep}).addTo(map);
+		m5.bindPopup("Villa Morelli e Gualtierotti<br>Via Modenese, 755 - Pontepetri - Pistoia<br>+39 349 6782147");
+		
+		var m6 = L.marker([44.0970168,10.7396507], {icon: sleep}).addTo(map);
+		m6.bindPopup("Tana dell'Istrice<br>Loc. Pian di Malarme, 38 - Cutigliano<br>+39 347 3203408");
+		
+		var m7 = L.marker([44.1317563,10.7426333], {icon: sleep}).addTo(map);
+		m7.bindPopup("Sasso al Melo<br>Loc. Melo - Cutigliano<br>+39 392 9141768");
+		
+		
+		var m8 = L.marker([44.0582631,10.9106684], {icon: sleep}).addTo(map);
+		m8.bindPopup("B&amp;B La Tuia<br>Via Nazionale - Pracchia<br>+39 0573 490477");
+		
+		
+		var m9 = L.marker([44.0040517,10.8354378], {icon: food}).addTo(map);
+		m9.bindPopup("Bar Margherita<br>Via Modenese, 655 - Le Piastre - Pistoia<br>+39 0573 472400");
+		
+		var m10 = L.marker([44.1224688,10.7756782], {icon: food}).addTo(map);
+		m10.bindPopup("La Doga Sport<br>Via dei Cacciatori, 7 - Doaganccia - Cutigliano<br>+39 0573 629176");
+
+		var m11 = L.marker([44.14443,10.6563091]).addTo(map);
+		m11.bindPopup("Abetone Gravity Park<br>+39 0573 60186");
+
+		var m12 = L.marker([44.1261578,10.698237400000002]).addTo(map);
+		m12.bindPopup("L'Erbolaio<br>Trasformazione e vendita prodotti tipici<br>Via Brennero, 112 - Abetone<br>+39 0573 60514");
+
+
+		var m13 = L.marker([44.1000139,10.7566881], {icon: food}).addTo(map);
+		m13.bindPopup("Latteria Pagliai Tiziana<br>Prodotti tipici locali e del sottobosco.<br>Via Pacioni, 17 - Cutigliano<br>+39 0573 68280");
+		
+		var m14 = L.marker([44.0564435,10.7827806], {icon: sleep}).addTo(map);
+		m14.bindPopup("Albergo Ristorante Il Cacciatore***<br>Via Marconi, 727 - San Marcello Pistoiese - 0573 630533");
+		
+			
+		var m15 = L.marker([44.1429056,10.668304], {icon: sleep}).addTo(map);
+		m15.bindPopup("Albergo Abetone e Piramidi****<br>Via Brennero, 528 - Abetone  - +39 0573 60005");
+		
+		var m16 = L.marker([44.1450767,10.6636906], {icon: sleep}).addTo(map);
+		m16.bindPopup("Residenza Albergo Miramonti ****<br>Via Brennero, 528 - Abetone +39 0573 60017");
+
+		var m17 = L.marker([44.1451845,10.6642914], {icon: sleep}).addTo(map);
+		m17.bindPopup("Albergo Excelsior***<br>Via Brennero, 313 - Abetone  <br>+39 0573 60010");
+		
+		var m18 = L.marker([44.1460468,10.6647849], {icon: sleep}).addTo(map);
+		m18.bindPopup("Albergo Ristorante Regina***<br>Via Uccelliera, 5 - Abetone <br>+39 0573 60007");
+
+		var m19 = L.marker([44.1345438,10.6303024], {icon: sleep}).addTo(map);
+		m19.bindPopup("Val di Luce Spa Resort****<br>Via Val di Luce, 22 - Abetone<br>+39 0573 60961");
+
+		var m20 = L.marker([44.0561042,10.8200741], {icon: sleep}).addTo(map);
+		m20.bindPopup("Albergo Ristorante Franceschi***<br>Piazza F.Ferrucci, 121 - Gavinana - San Marcello Pistoiese<br>+39 0573 66444");
+
+
+		var m21 = L.marker([44.1651517,10.6406021], {icon: sleep}).addTo(map);
+		m21.bindPopup("Albergo La Carinzia ***<br>Via Giardini, 205 - Fiumalbo<br>+39 0573 73935");
+		
+		var m22 = L.marker([44.1013622,10.7543492], {icon: sleep}).addTo(map);
+		m22.bindPopup("Albergo La Valle ****<br>Via Carega, 10 - Cutigliano<br>+39 0573 68035");
+		
+		var m23 = L.marker([44.1023715,10.7189012], {icon: sleep}).addTo(map);
+		m23.bindPopup("Albergo Petrucci ***<br>Via del Sestaione, 39 - Pian degli Ontani - Cutigliano<br>+39 0573 673021");
+			
+		var m24 = L.marker([44.105692,10.7217443], {icon: sleep}).addTo(map);
+		m24.bindPopup("Albergo Ristorante Sichi ***<br>Viale Beatrice, 59 - Pian degli Ontani - Cutigliano<br>+39 0573 673015");
+
+		var m25 = L.marker([44.1442298,10.6626391], {icon: sleep}).addTo(map);
+		m25.bindPopup("Albergo Sport ***<br>Via Brennero, 542 - Abetone<br>+39 0573 60034");
+		
+		var m26 = L.marker([44.1442298,10.6626391], {icon: sleep}).addTo(map);
+		m26.bindPopup("Albergo Sport ***<br>Via Brennero, 542 - Abetone<br>+39 0573 60034");
+		
+		var m27 = L.marker([44.1405035,10.6708789], {icon: sleep}).addTo(map);
+		m27.bindPopup("Albergo Primula**<br>Via Brennero, 195 - Abetone<br>+39 0573 60108");
+
+		var m28 = L.marker([44.1385632,10.6751919], {icon: sleep}).addTo(map);
+		m28.bindPopup("Ostello Bucaneve<br>Via Brennero, 157 - Abetone<br>+39 0573 60117");
+
+		var m29 = L.marker([44.1314791,10.6869936], {icon: sleep}).addTo(map);
+		m29.bindPopup("Albergo Tirolo **<br>Via Brennero, 300 - Abetone<br>+39 0573 60334");
+
+		var m30 = L.marker([44.130917,10.6874549], {icon: sleep}).addTo(map);
+		m30.bindPopup("Pensione Noemi<br>Via Brennero, 244 - Le Regine - Abetone<br>+39 0573 60168");
+
+
+		var m31 = L.marker([44.099151,10.7571602], {icon: sleep}).addTo(map);
+		m31.bindPopup("Hotel Villa Patrizia ***<br>Viale Europa, 9 - Cutigliano<br>+39 0573 68024");
+
+		var m32 = L.marker([44.11566,10.691607], {icon: sleep}).addTo(map);
+		m32.bindPopup("Albergo La Villa **<br>Via Sestaione, 118 - Pian di Novello - Cutigliano<br>+39 0573 673061");
+
+
+	</script>
+</body>
+</html>
+
+
+

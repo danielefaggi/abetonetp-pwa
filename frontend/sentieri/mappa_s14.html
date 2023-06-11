@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet Quick Start Guide Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="leaflet.css" />
+	<link rel="stylesheet" href="leaflet-gps.css" />
+
+</head>
+<body>
+	<div id="map" style="position:fixed; width: 100%; height: 100%; left: 0; top:0;"></div>
+
+	<script src="leaflet.js"></script>
+	<script src="leaflet-compass.js"></script>
+	<script src="leaflet-gps.js"></script>
+	<script>
+
+//freccia
+	var customControl = L.Control.extend({
+			options: {
+				position: 'topright' 
+				//control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
+				},
+
+			onAdd: function (map) {
+			 var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+			 container.style.backgroundColor = 'white';
+			 container.style.backgroundImage = "url(images/back2.png)";
+			 container.style.width = '32px';
+			 container.style.height = '32px';
+			 container.onclick = function(){
+				 console.log('buttonClicked');
+				 window.history.back();
+				 }
+				 return container;			
+				 },
+				 });
+				
+		//fine freccia
+
+
+
+
+		var map = L.map('map').setView([44.0923, 10.767], 15);
+		
+					//controlli speciali
+		L.control.scale().addTo(map);
+		map.addControl(new customControl());
+		//map.addControl( new L.Control.Compass() );
+		map.addControl( new L.Control.Gps({autoActive:false}) );
+        //fine controlli
+
+
+		L.tileLayer('Maps/{z}/{x}/{y}.png', {
+			maxZoom: 15,
+			minZoom: 12,
+			
+			id: 'examples.map-i875mjb7'
+		}).addTo(map);
+		
+				
+		var polygon = L.polyline([
+
+		[44.098756732,10.756669845],
+[44.098777855,10.756693399],
+[44.098670483,10.756881237],
+[44.098606110,10.757052898],
+[44.098606110,10.757181644],
+[44.098649025,10.757310390],
+[44.098691940,10.757718086],
+[44.098691940,10.757782459],
+[44.098670483,10.758104324],
+[44.098520279,10.758447647],
+[44.098262787,10.758790970],
+[44.098155499,10.759069920],
+[44.098091125,10.759134293],
+[44.097983837,10.759134293],
+[44.097769260,10.759112835],
+[44.097533226,10.759155750],
+[44.097404480,10.759198666],
+[44.097318649,10.759263039],
+[44.097254276,10.759606361],
+[44.097232819,10.759949684],
+[44.097189903,10.760014057],
+[44.097125530,10.760014057],
+[44.097018242,10.759949684],
+[44.096975327,10.759971142],
+[44.096782207,10.760400295],
+[44.096696377,10.760550499],
+[44.096374512,10.760829449],
+[44.096288681,10.760936737],
+[44.096245766,10.761108398],
+[44.096202850,10.761322975],
+[44.096181393,10.761494637],
+[44.096138477,10.761559010],
+[44.096052647,10.761580467],
+[44.095966816,10.761580467],
+[44.095323086,10.761301517],
+[44.095065594,10.761215687],
+[44.094829559,10.761022568],
+[44.094614983,10.760915279],
+[44.094336033,10.760829449],
+[44.093670845,10.760936737],
+[44.092876911,10.761451721],
+[44.092576504,10.761709213],
+[44.092211723,10.762181282],
+[44.092040062,10.762460232],
+[44.091589451,10.763103962],
+[44.091267586,10.763854980],
+[44.091138840,10.764434338],
+[44.090924263,10.764970779],
+[44.090838432,10.765056610],
+[44.090516567,10.765185356],
+[44.090430737,10.765314102],
+[44.090087414,10.766108036],
+[44.089980125,10.766279697],
+[44.089615345,10.766644478],
+[44.089206895,10.766904317],
+[44.089210164,10.766914627],
+
+]).addTo(map);
+
+	</script>
+</body>
+</html>
+
+
+
