@@ -12,8 +12,20 @@ if( 'function' === typeof importScripts) {
     const {precacheAndRoute} = workbox.precaching;
     //const {registerRoute} = workbox.routing;
     //const {StaleWhileRevalidate} = workbox.strategies;
-        
-    precacheAndRoute(self.__WB_MANIFEST);
+
+    console.log('Service worker start');
+
+    const resourcesToCache = self.__WB_MANIFEST;
+    precacheAndRoute(resourcesToCache);
+    // Cambiare il nome della cache usata da workbox-precaching
+    workbox.core.setCacheNameDetails({
+      prefix: 'abetonetp',
+      suffix: 'v1',
+      precache: 'assets'
+    });
+    // Il nuovo nome della cache
+    console.log('Cache name:' + workbox.core.cacheNames.precache);
+
 
     workbox.routing.setCatchHandler(({event}) => {
         // Return the precached offline page if a document is being requested
@@ -23,4 +35,5 @@ if( 'function' === typeof importScripts) {
       
         return Response.error();
     });    
+
 }

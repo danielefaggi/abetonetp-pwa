@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Abetone Trail Park</title>
     <link rel="stylesheet" href="css/foundation.css" />
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="./manifest.json">
     <script src="js/vendor/modernizr.js"></script>
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     
@@ -21,17 +26,46 @@
 				<div class="large-12 medium-12 columns">
 				
 				<center>
-				<img src="img/logo_trail_park.png"><br><br>
-				<a href="index2.html" class="large button round" style='width:60%;'>Sentieri</a>
-				<a href="sentieri/ristoranti.html" class="large button round" style='width:60%;'>Ospitalita'</a>
-				<a href="istruzioni.html" class="large button round" style='width:60%;'>Istruzioni</a>
-        <br><br>
-				<a href="lingua.html" class="large button round" style='width:60%;'>Language</a>
-				<br><br>				
-				<a href="credits.html" class="large button round" style='width:60%;'>Credits</a><br><br>
-
-
-				
+          <img src="img/logo_trail_park.png"><br><br>
+          <div id="menu">
+            <a href="index2.html" class="large button round" style='width:60%;'>Sentieri</a>
+            <a href="sentieri/ristoranti.html" class="large button round" style='width:60%;'>Ospitalita'</a>
+            <a href="istruzioni.html" class="large button round" style='width:60%;'>Istruzioni</a>
+            <br><br>
+            <a href="lingua.html" class="large button round" style='width:60%;'>Language</a>
+            <br><br>				
+            <a href="credits.html" class="large button round" style='width:60%;'>Credits</a><br><br>
+          </div>
+          <div id="install-instr" class="hidden">
+            <p>
+              Premendo il seguente bottone installerai la presente applicazione sul tuo dispositivo
+              permettendoti l'uso della stessa con mappe e GPS anche senza connessione ad Internet
+            </p>
+            <p>
+              By pressing the following button you will install this application on your device
+              enabling you to use it with maps and GPS support even if Internet is not available
+            </p>
+          </div>
+          <button id="install-button" class="large button round hidden" style='width:60%;margin-top:10px'>Install</button>
+          <div id="wait" class="hidden">
+            Attendere...<br>
+            <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <clipPath id="clip">
+                  <rect x="0" y="0" width="100" height="50"/>
+                </clipPath>
+              </defs>
+              <circle cx="50" cy="50" r="45" fill="none" stroke="blue" stroke-width="10" clip-path="url(#clip)"/>
+              <animateTransform attributeType="xml"
+                                attributeName="transform"
+                                type="rotate"
+                                from="0 0 0"
+                                to="360 0 0"
+                                dur="1s"
+                                repeatCount="indefinite"/>
+            </svg><br>
+            Wait...
+          </div>
 				</center><br><br>
 				
 				</div>
@@ -39,6 +73,8 @@
     </div>
 
     <script>
+
+      // Registrazione Service Worker
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('./sw.js').then((registration) => {
@@ -48,6 +84,86 @@
           });
         });
       }
+
+      // Variabile globale per memorizzare l'evento beforeinstallprompt
+      let deferredPrompt;
+
+      // Ascoltare l'evento beforeinstallprompt
+      window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevenire il prompt nativo del browser
+        e.preventDefault();
+        // Memorizzare l'evento
+        deferredPrompt = e;
+        // Mostrare il bottone di installazione
+        showInstallButton();
+        // Nascondere il wait
+        const wait = document.querySelector('#wait');
+        wait.classList.add('hidden');
+
+      });
+
+      // Funzione per mostrare il bottone di installazione
+      function showInstallButton() {
+
+        const installButton = document.querySelector('#install-button');
+        installButton.classList.remove('hidden');
+
+        const installInstr = document.querySelector('#install-instr');
+        installInstr.classList.remove('hidden');
+
+        const menu = document.querySelector('#menu');
+        menu.classList.add('hidden');
+
+        const wait = document.querySelector('#wait');
+        wait.classList.add('hidden');
+
+        // Aggiungere un listener al click del bottone
+        installButton.addEventListener('click', installPWA);
+
+      }
+
+      // Funzione per installare la PWA
+      function installPWA() {
+
+        const wait = document.querySelector('#wait');
+        wait.classList.remove('hidden');
+
+        const installButton = document.querySelector('#install-button');
+        installButton.classList.add('hidden');
+
+        // Se esiste l'evento memorizzato
+        if (deferredPrompt) {
+          // Attivare il prompt nativo del browser
+          deferredPrompt.prompt();
+          // Attendere la risposta dell'utente
+          deferredPrompt.userChoice.then((choiceResult) => {
+            // Se l'utente ha accettato l'installazione
+            if (choiceResult.outcome === 'accepted') {
+              // Nascondere il bottone di installazione
+              hideInstallButton();
+            }
+            // Azzerare l'evento memorizzato
+            deferredPrompt = null;
+          });
+        }
+      }
+
+      // Funzione per nascondere il bottone di installazione
+      function hideInstallButton() {
+
+        const installButton = document.querySelector('#install-button');
+        installButton.classList.add('hidden');
+
+        const installInstr = document.querySelector('#install-instr');
+        installInstr.classList.add('hidden');
+
+        const menu = document.querySelector('#menu');
+        menu.classList.remove('hidden');
+
+        const wait = document.querySelector('#wait');
+        wait.classList.add('hidden');
+
+      }      
     </script>    
 	
     <script src="js/vendor/jquery.js"></script>
